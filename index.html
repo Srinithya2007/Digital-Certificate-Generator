@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CertifyPro - Digital Certificate Generator</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Certificate export libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">C</div>
+            <div>
+                <h2>CertifyPro</h2>
+                <span>Digital Certificate Studio</span>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <span class="status-dot"></span>
+            <span>Workspace Ready</span>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <div>
+                <p class="eyebrow">CERTIFICATE MANAGEMENT</p>
+                <h1>Create Professional Certificates</h1>
+                <p>Design, customize and download certificates in seconds.</p>
+            </div>
+            <div class="welcome-icon">🏆</div>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card">
+                <span>Total Certificates</span>
+                <h2 id="totalCertificates">0</h2>
+                <small>Created certificates</small>
+            </div>
+
+            <div class="stat-card">
+                <span>Templates</span>
+                <h2>03</h2>
+                <small>Available designs</small>
+            </div>
+
+            <div class="stat-card">
+                <span>Export Formats</span>
+                <h2>02</h2>
+                <small>PDF and PNG</small>
+            </div>
+        </section>
+
+        <section class="workspace">
+
+            <!-- LEFT SIDE: FORM -->
+            <div class="editor panel">
+                <div class="section-heading">
+                    <div>
+                        <h2>Certificate Details</h2>
+                        <p>Enter the information below.</p>
+                    </div>
+                    <span class="step-number">01</span>
+                </div>
+
+                <form id="certificateForm">
+
+                    <div class="form-group">
+                        <label for="recipient">Recipient Name *</label>
+                        <input type="text" id="recipient"
+                               placeholder="Enter recipient name" required maxlength="60">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course">Course / Achievement *</label>
+                        <input type="text" id="course"
+                               placeholder="e.g. Web Development" required maxlength="80">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organization">Organization Name *</label>
+                        <input type="text" id="organization"
+                               placeholder="Enter organization name" required maxlength="70">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="instructor">Instructor / Authorized By</label>
+                        <input type="text" id="instructor"
+                               placeholder="Enter instructor name" maxlength="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="issueDate">Issue Date *</label>
+                        <input type="date" id="issueDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="template">Choose Certificate Template</label>
+                        <select id="template">
+                            <option value="classic">Classic Gold</option>
+                            <option value="modern">Modern Blue</option>
+                            <option value="minimal">Minimal Elegant</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="certificateTitle">Certificate Heading</label>
+                        <input type="text" id="certificateTitle"
+                               value="CERTIFICATE OF ACHIEVEMENT"
+                               maxlength="55">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="certificateId">Certificate ID</label>
+                        <input type="text" id="certificateId" readonly>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Generate Certificate
+                    </button>
+
+                    <button type="button" id="saveBtn" class="btn btn-secondary">
+                        Save to History
+                    </button>
+
+                    <button type="reset" class="btn btn-reset">
+                        Reset Form
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- RIGHT SIDE: PREVIEW -->
+            <div class="preview-section">
+
+                <div class="preview-header">
+                    <div>
+                        <h2>Live Preview</h2>
+                        <p>Your certificate updates automatically.</p>
+                    </div>
+                    <span class="live-badge">● LIVE</span>
+                </div>
+
+                <div class="certificate-wrapper">
+                    <div id="certificate" class="certificate classic">
+
+                        <div class="certificate-inner">
+
+                            <div class="certificate-logo">✦</div>
+
+                            <p class="organization-name" id="previewOrganization">
+                                YOUR ORGANIZATION
+                            </p>
+
+                            <div class="decorative-line"></div>
+
+                            <h1 id="previewTitle">
+                                CERTIFICATE OF ACHIEVEMENT
+                            </h1>
+
+                            <p class="presented">THIS CERTIFICATE IS PROUDLY PRESENTED TO</p>
+
+                            <h2 id="previewRecipient">Recipient Name</h2>
+
+                            <div class="name-line"></div>
+
+                            <p class="description">
+                                For successfully completing the course
+                            </p>
+
+                            <h3 id="previewCourse">Web Development</h3>
+
+                            <p class="description">
+                                In recognition of dedication, commitment and achievement.
+                            </p>
+
+                            <div class="certificate-footer">
+
+                                <div class="signature">
+                                    <h4 id="previewInstructor">Authorized Person</h4>
+                                    <div class="signature-line"></div>
+                                    <p>Authorized Signature</p>
+                                </div>
+
+                                <div class="certificate-seal">
+                                    ★
+                                    <span>VERIFIED</span>
+                                </div>
+
+                                <div class="date-block">
+                                    <h4 id="previewDate">01 JAN 2026</h4>
+                                    <div class="signature-line"></div>
+                                    <p>Issue Date</p>
+                                </div>
+
+                            </div>
+
+                            <div class="certificate-id">
+                                Certificate ID: <span id="previewId"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="download-actions">
+                    <button id="downloadPdf" class="btn btn-primary">
+                        ↓ Download PDF
+                    </button>
+
+                    <button id="downloadPng" class="btn btn-secondary">
+                        ↓ Download PNG
+                    </button>
+
+                    <button id="printBtn" class="btn btn-outline">
+                        Print
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- CERTIFICATE HISTORY -->
+        <section class="history panel">
+            <div class="section-heading history-heading">
+                <div>
+                    <h2>Certificate History</h2>
+                    <p>Manage your previously saved certificates.</p>
+                </div>
+
+                <input type="search" id="searchHistory"
+                       placeholder="Search certificates...">
+            </div>
+
+            <div id="historyList" class="history-list"></div>
+
+            <p id="emptyMessage" class="empty-message">
+                No saved certificates yet.
+            </p>
+        </section>
+
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <footer>
+        <p>© 2026 CertifyPro | Digital Certificate Generator</p>
+        <p>Built with HTML, CSS and JavaScript</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
